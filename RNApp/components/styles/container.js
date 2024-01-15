@@ -12,7 +12,16 @@ const containers = (appSettings) =>
                 backgroundColor: ('backgroundColor' in appSettings) ? appSettings['backgroundColor'] : "#ffffff",
                 color: ('foregroundColor' in appSettings) ? appSettings['foregroundColor'] : "#ffffff",
                 width: Dimensions.get("screen").width,
-                height: Dimensions.get("screen").height
+                height: Dimensions.get("screen").height,
+                justifyContent: 'center',
+                alignItems: "center"
+            },
+            formBox: {
+                width: "80%",
+                height: "60%",
+                backgroundColor: "#6e7c85",
+                borderRadius: 20,
+                padding: "4%",
             }
         })
         
