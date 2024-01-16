@@ -1,4 +1,4 @@
-from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.validators import UniqueValidator
 
 from rest_framework import serializers
@@ -42,11 +42,9 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
     
     def get_token(self, obj):
-        jwt_payload_handler = api_settings.SIMPLE_JWT.JWT_PAYLOAD_HANDLER
-        jwt_encode_handler = api_settings.SIMPLE_JWT.JWT_ENCODE_HANDLER
-        payload = jwt_payload_handler(obj)
-        token = jwt_encode_handler(payload)
-        return token
+        refresh = RefreshToken.for_user(obj)
+        access_token = str(refresh.access_token)
+        return access_token
 
         
     class Meta:
