@@ -39,6 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
         if password is not None:
             instance.set_password(password)
         instance.save()
+        token = self.get_token(instance)
         return instance
     
     def get_token(self, obj):

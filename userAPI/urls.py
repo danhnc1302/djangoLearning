@@ -24,5 +24,5 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('test', TestView.as_view()),
     path('create-user', UserView.as_view()),
-    
+    path('get-user', UserView.as_view()),
 ]
