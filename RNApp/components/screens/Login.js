@@ -15,15 +15,42 @@ import button from '../styles/button'
 import { useNavigation } from '@react-navigation/native'
 const Login = () => {
   const globalContext = useContext(Context)
-  const { isLoggedIn, appSettings, setIsLoggedIn } = globalContext
+  const { isLoggedIn, appSettings, setIsLoggedIn, setUserObj, setToken } = globalContext
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [securePass, setSecurePass] = useState(true)
   const navigation = useNavigation()
 
-  const handleLogin = () => {
-    setIsLoggedIn(true)
-    navigation.navigate("Home")
+  function handleLogin() {
+    let body = {
+
+      "email": email.toLowerCase(),
+      "username": "danh10s2",
+      "first_name": "danh",
+      "last_name": "danh",
+      "password": password
+    }
+    console.log(body)
+    fetch("http://192.168.68.109:8000/api/v1.0/user/create-user/", {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => {
+        console.log(res)
+        if (res.ok) return res.json()
+        else throw res.json()
+      })
+      .then(json => {
+        setUserObj(json)
+        setToken(json.token)
+        setIsLoggedIn(true)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
   return (
     <View style={containers(appSettings).outerPage}>
@@ -47,8 +74,8 @@ const Login = () => {
           secureTextEntry={securePass}
         />
 
-        <TouchableOpacity 
-          style={[button(appSettings).login,{alignSelf: "center", marginTop: 10}]}
+        <TouchableOpacity
+          style={[button(appSettings).login, { alignSelf: "center", marginTop: 10 }]}
           onPress={handleLogin}>
           <Text>Login</Text>
         </TouchableOpacity>

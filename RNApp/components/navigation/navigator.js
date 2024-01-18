@@ -9,11 +9,11 @@ const Stack = createStackNavigator()
 
 const Navigator = () => {
   const globalContext = useContext(Context)
-  const { isLoggedIn } = globalContext
+  const { isLoggedIn, userObj } = globalContext
   return (
     <Stack.Navigator>
       {
-        (!isLoggedIn) ? (
+        (!isLoggedIn || !userObj) ? (
           <>
             <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />

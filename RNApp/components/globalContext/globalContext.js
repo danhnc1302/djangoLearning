@@ -1,11 +1,12 @@
 import React, { useState, useContext, createContext, useRef, useEffect } from "react";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Context = createContext()
 
 const Provider = ({ children }) => {
 
     const [domain, setDomain] = useState("http://192.168.68.109:8000")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [userObj, setUserObj] = useState()
     const [appSettings, setAppSettings] = useState({})
 
     function initAppSettings() {
@@ -24,6 +25,10 @@ const Provider = ({ children }) => {
         })
     }
 
+    const setToken = async (token) => {
+        await AsyncStorage.setItem("token", token)
+    }
+
     useEffect(()=> {
         initAppSettings()
     },[])
@@ -33,7 +38,10 @@ const Provider = ({ children }) => {
         setAppSettings,
         domain,
         isLoggedIn,
-        setIsLoggedIn
+        setIsLoggedIn,
+        userObj,
+        setUserObj,
+        setToken
     }
 
     return <Context.Provider value={globalContext}>{children}</Context.Provider>
