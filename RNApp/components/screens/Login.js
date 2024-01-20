@@ -18,20 +18,18 @@ const Login = () => {
   const { isLoggedIn, appSettings, setIsLoggedIn, setUserObj, setToken } = globalContext
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
   const [securePass, setSecurePass] = useState(true)
   const navigation = useNavigation()
 
   function handleLogin() {
+    setError("")
     let body = {
-
       "email": email.toLowerCase(),
-      "username": "danh10s2",
-      "first_name": "danh",
-      "last_name": "danh",
       "password": password
     }
     console.log(body)
-    fetch("http://192.168.68.109:8000/api/v1.0/user/create-user/", {
+    fetch("http://192.168.68.109:8000/api/v1.0/user/login-user/", {
       method: "POST",
       headers: {
         'Content-type': 'application/json'
@@ -40,12 +38,17 @@ const Login = () => {
     })
       .then(res => {
         console.log(res)
-        if (res.ok) return res.json()
-        else throw res.json()
+        if (res.ok) {
+          return res.json()
+        } else {
+          setError("Invalid Credentials")
+          throw res.json()
+        }
       })
       .then(json => {
+        console.log(json.data.token)
         setUserObj(json)
-        setToken(json.token)
+        setToken(json.data.token)
         setIsLoggedIn(true)
       })
       .catch(error => {
@@ -56,6 +59,8 @@ const Login = () => {
     <View style={containers(appSettings).outerPage}>
       <View style={containers(appSettings).formBox}>
         <Text style={[fonts(appSettings).h1, margin.top30Percent]}>Login</Text>
+
+        <Text style={fonts(appSettings).errorLabel}>{error}</Text>
 
         <Text style={[fonts(appSettings).inputLabel, margin.topTenPercent]} >Email Address</Text>
         <TextInput

@@ -1,28 +1,35 @@
-import React, {useContext} from 'react'
-import { 
-    StyleSheet, 
-    Text, 
-    View,
-    TouchableOpacity 
+import React, { useContext } from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Context } from '../globalContext/globalContext'
 import containers from '../styles/container'
 import fonts from '../styles/fonts'
 import button from '../styles/button'
+import margin from '../styles/margin'
 
 const Landing = () => {
-    const globalContext = useContext(Context)
-    const { isLoggedIn, appSettings } = globalContext
-    const navigation = useNavigation()
+  const globalContext = useContext(Context)
+  const { isLoggedIn, appSettings } = globalContext
+  const navigation = useNavigation()
   return (
     <View style={containers(appSettings).outerPage}>
       <Text style={fonts(appSettings).h1}>Landing</Text>
-      <Text style={fonts(appSettings).p}>You are {(isLoggedIn)? '' : "Not "}logged in</Text>
-      <TouchableOpacity 
+      <Text style={fonts(appSettings).p}>You are {(isLoggedIn) ? '' : "Not "}logged in</Text>
+      <TouchableOpacity
         onPress={() => navigation.navigate("Login")}
         style={button(appSettings).login}>
-            <Text>Login</Text>
+        <Text>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Register")}
+        style={[button(appSettings).login, margin.topTenPercent]}>
+        <Text>Register</Text>
       </TouchableOpacity>
     </View>
   )

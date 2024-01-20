@@ -20,6 +20,11 @@ const fonts = (appSettings) => StyleSheet.create({
     inputLabel: {
         color: "white",
         fontSize: 16
+    },
+    errorLabel: {
+        width: "100%",
+        textAlign: "center",
+        color: "white"
     }
 })
 

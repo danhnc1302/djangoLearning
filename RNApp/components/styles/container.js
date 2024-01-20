@@ -18,7 +18,7 @@ const containers = (appSettings) =>
             },
             formBox: {
                 width: "80%",
-                height: "60%",
+                justifyContent: "center",
                 backgroundColor: "#6e7c85",
                 borderRadius: 20,
                 padding: "4%",
